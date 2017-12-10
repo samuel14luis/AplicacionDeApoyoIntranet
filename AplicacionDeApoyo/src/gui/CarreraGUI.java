@@ -6,10 +6,9 @@
 package gui;
 
 import dao.CarreraDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import to.CarreraTO;
 import to.FacultadTO;
+import to.NombreCicloTO;
 import utilidades.Complementos;
 import utilidades.FotoTO;
 import utilidades.LlenadoresYLimpiadores;
@@ -52,12 +51,20 @@ public class CarreraGUI extends javax.swing.JFrame {
         jbtnCancelar = new javax.swing.JButton();
         jbtnAgregarEAP = new javax.swing.JButton();
         jbtnSubirLogo = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jcbxCicloMax = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setText("Facultad:");
+
+        jcbxFacultades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbxFacultadesActionPerformed(evt);
+            }
+        });
 
         jbtnNuevaCarrera.setText("Nueva E.A.P:");
         jbtnNuevaCarrera.addActionListener(new java.awt.event.ActionListener() {
@@ -71,14 +78,14 @@ public class CarreraGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "id", "Carrera Profesional", "Creación"
+                "id", "Carrera Profesional", "Creación", "Ciclos"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -131,6 +138,8 @@ public class CarreraGUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Ciclo máximo:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -145,7 +154,11 @@ public class CarreraGUI extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jcbxCicloMax, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jbtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -168,7 +181,10 @@ public class CarreraGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(jcbxCicloMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jbtnCancelar)
@@ -243,6 +259,9 @@ public class CarreraGUI extends javax.swing.JFrame {
             obj.setId_facultad(((FacultadTO) jcbxFacultades.getModel().getSelectedItem()).getId());
             obj.setFoto(foto.getFoto());
             obj.setLong_bytes(foto.getLong_bytes());
+            obj.setId_ciclo_max(
+                    ((NombreCicloTO) jcbxCicloMax.getSelectedItem()).getId()
+            );
             try {
                 dao.insertarCarrera(obj);
                 llenarDatos();
@@ -264,11 +283,16 @@ public class CarreraGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbtnSubirLogoActionPerformed
 
+    private void jcbxFacultadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxFacultadesActionPerformed
+        llenarDatos();
+    }//GEN-LAST:event_jcbxFacultadesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -277,6 +301,7 @@ public class CarreraGUI extends javax.swing.JFrame {
     private javax.swing.JButton jbtnCancelar;
     private javax.swing.JButton jbtnNuevaCarrera;
     private javax.swing.JButton jbtnSubirLogo;
+    private javax.swing.JComboBox<String> jcbxCicloMax;
     private javax.swing.JComboBox<String> jcbxFacultades;
     private javax.swing.JLabel jlblLogo;
     private javax.swing.JTextField jtxtNombreCarrera;
@@ -290,6 +315,11 @@ public class CarreraGUI extends javax.swing.JFrame {
         jbtnSubirLogo.setEnabled(b);
         jtxtNombreCarrera.setEditable(b);
         jDateChooser1.setEnabled(b);
+        if (b) {
+            LlenadoresYLimpiadores.llenarComboBoxCiclo(jcbxCicloMax);
+        } else {
+            LlenadoresYLimpiadores.limpiarComboBox(jcbxCicloMax);
+        }
     }
 
     private void limpiarformulario() {

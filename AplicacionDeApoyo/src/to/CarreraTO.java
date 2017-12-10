@@ -13,7 +13,16 @@ public class CarreraTO {
     Date creacion;
     FileInputStream foto;
     int long_bytes;
+    int id_ciclo_max;
 
+    public int getId_ciclo_max() {
+        return id_ciclo_max;
+    }
+
+    public void setId_ciclo_max(int id_ciclo_max) {
+        this.id_ciclo_max = id_ciclo_max;
+    }
+    
     public int getId() {
         return id;
     }

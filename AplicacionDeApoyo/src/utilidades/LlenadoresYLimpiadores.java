@@ -8,6 +8,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import to.FacultadTO;
+import to.NombreCicloTO;
+import to.PlanDeEstudioTO;
 
 /**
  *
@@ -37,9 +39,24 @@ public class LlenadoresYLimpiadores {
         }
     }
 
-    private static void limpiarComboBox(JComboBox combo) {
+    public static void limpiarComboBox(JComboBox combo) {
         DefaultComboBoxModel modelo = (DefaultComboBoxModel) combo.getModel();
         modelo.removeAllElements();
+    }
+    
+    public static void llenarComboBoxPlanEstudio(JComboBox combo){
+        try {
+            ResultSet rs = conexion.Conexion.getInstancia().getConn().createStatement().executeQuery("SELECT * FROM plan_estudios");
+            DefaultComboBoxModel modelo = (DefaultComboBoxModel) combo.getModel();
+            while(rs.next()){
+                PlanDeEstudioTO obj = new PlanDeEstudioTO();
+                obj.setId(rs.getInt(1));
+                obj.setNombre(rs.getString(2));
+                modelo.addElement(obj);
+            }
+        } catch (Exception ex) {
+            Complementos.mostrarMensaje("Error al mostrar los planes de estudio disponibles "+ex);
+        }
     }
 
     public static void llenarTableCarreras(JTable tabla, JComboBox facultades) throws Exception {
@@ -50,13 +67,46 @@ public class LlenadoresYLimpiadores {
         );
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         while(rs.next()){
-            modelo.addRow(new Object[]{rs.getInt(1), rs.getString(2), rs.getDate(3)});
+            NombreCicloTO obj = new NombreCicloTO();
+            obj.setId(rs.getInt(4));
+            obj.setNombre(rs.getString(5));
+            modelo.addRow(new Object[]{rs.getInt(1), rs.getString(2), rs.getDate(3),obj});
         }
     }
 
-    private static void limpiartable(JTable tabla) {
+    public static void limpiartable(JTable tabla) {
         while(tabla.getModel().getRowCount() > 0){
             ((DefaultTableModel) tabla.getModel()).removeRow(0);
+        }
+    }
+
+    public static void llenarComboBoxCiclo(JComboBox combo) {
+        try {
+            ResultSet rs = conexion.Conexion.getInstancia().getConn().createStatement().executeQuery("SELECT * FROM nombre_ciclo");
+            DefaultComboBoxModel modelo = (DefaultComboBoxModel) combo.getModel();
+            while(rs.next()){
+                NombreCicloTO obj = new NombreCicloTO();
+                obj.setId(rs.getInt(1));
+                obj.setNombre(rs.getString(2));
+                modelo.addElement(obj);
+            }
+        } catch (Exception ex) {
+            Complementos.mostrarMensaje("Error al mostrar los ciclos disponibles "+ex);
+        }
+    }
+
+    public static void llenarComboBoxEAP(JComboBox combo, FacultadTO facultadTO) {
+        try {
+            ResultSet rs = conexion.Conexion.getInstancia().getConn().createStatement().executeQuery("SELECT * FROM nombre_ciclo");
+            DefaultComboBoxModel modelo = (DefaultComboBoxModel) combo.getModel();
+            while(rs.next()){
+                NombreCicloTO obj = new NombreCicloTO();
+                obj.setId(rs.getInt(1));
+                obj.setNombre(rs.getString(2));
+                modelo.addElement(obj);
+            }
+        } catch (Exception ex) {
+            Complementos.mostrarMensaje("Error al mostrar los planes de estudio disponibles "+ex);
         }
     }
 }

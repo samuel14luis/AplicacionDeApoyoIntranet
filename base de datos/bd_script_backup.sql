@@ -104,9 +104,12 @@ CREATE TABLE `carrera` (
   `f_creacion` date NOT NULL,
   `logo` mediumblob,
   `id_facultad` int(11) NOT NULL,
+  `id_ciclo_max` int(11) NOT NULL,
   PRIMARY KEY (`idCARRERA`),
   KEY `fk_CARRERA_FACULTAD1_idx` (`id_facultad`),
-  CONSTRAINT `fk_CARRERA_FACULTAD1` FOREIGN KEY (`id_facultad`) REFERENCES `facultad` (`idFACULTAD`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_CARRERA_NOMBRE_CICLO1_idx` (`id_ciclo_max`),
+  CONSTRAINT `fk_CARRERA_FACULTAD1` FOREIGN KEY (`id_facultad`) REFERENCES `facultad` (`idFACULTAD`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_CARRERA_NOMBRE_CICLO1` FOREIGN KEY (`id_ciclo_max`) REFERENCES `nombre_ciclo` (`idNOMBRE_CICLO`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -270,13 +273,26 @@ CREATE TABLE `facultad` (
   `nombre_facu` varchar(120) NOT NULL,
   `f_creacion` date NOT NULL,
   PRIMARY KEY (`idFACULTAD`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `facultad`
 --
 
 /*!40000 ALTER TABLE `facultad` DISABLE KEYS */;
+INSERT INTO `facultad` (`idFACULTAD`,`nombre_facu`,`f_creacion`) VALUES 
+ (1,'Facultad de Bromatología y Nutrición','2002-12-03'),
+ (2,'Facultad de Ciencias','2002-12-03'),
+ (3,'Facultad de Ciencias Económicas, Contables y Financieras','2002-12-03'),
+ (4,'Facultad de Ciencias Empresariales','2002-12-03'),
+ (5,'Facultad de Ciencias Sociales','2002-12-03'),
+ (6,'Facultad de Derecho y Ciencias Políticas','2002-12-03'),
+ (7,'Facultad de Educación','2002-12-03'),
+ (8,'Facultad de Ingeniería Agraria, Industrias Alimentarias y Ambiental','2002-12-03'),
+ (9,'Facultad de Ingeniería Industrial, Sistemas e Informática','2002-12-03'),
+ (10,'Facultad de Ingeniería Pesquera','2002-12-03'),
+ (11,'Facultad de Ingeniería Química y Metalurgia','2002-12-03'),
+ (12,'Facultad de Medicina Humana','2001-12-03');
 /*!40000 ALTER TABLE `facultad` ENABLE KEYS */;
 
 
@@ -398,7 +414,7 @@ CREATE TABLE `persona` (
 
 DROP TABLE IF EXISTS `plan_estudios`;
 CREATE TABLE `plan_estudios` (
-  `idPLAN_ESTUDIOS` int(11) NOT NULL,
+  `idPLAN_ESTUDIOS` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_plan` varchar(45) NOT NULL,
   PRIMARY KEY (`idPLAN_ESTUDIOS`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
