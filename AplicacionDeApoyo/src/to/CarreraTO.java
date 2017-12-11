@@ -70,5 +70,11 @@ public class CarreraTO {
     public void setLong_bytes(int long_bytes) {
         this.long_bytes = long_bytes;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+    
     
 }

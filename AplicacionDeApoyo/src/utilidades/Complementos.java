@@ -8,7 +8,6 @@ package utilidades;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;

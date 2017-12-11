@@ -1,6 +1,10 @@
 package gui;
 
+import to.CarreraTO;
+import to.Curso_Plan_TO;
 import to.FacultadTO;
+import to.NombreCicloTO;
+import to.PlanDeEstudioTO;
 import utilidades.LlenadoresYLimpiadores;
 
 /**
@@ -9,15 +13,15 @@ import utilidades.LlenadoresYLimpiadores;
  */
 public class Curso_PlanDeEstudiosGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Curso_PlanDeEstudiosGUI
-     */
+    Curso_Plan_TO info_plan_curso;
+
     public Curso_PlanDeEstudiosGUI() {
         initComponents();
         LlenadoresYLimpiadores.llenarComboBoxPlanEstudio(jcbxPlanDeEstudio);
-        LlenadoresYLimpiadores.llenarComboBoxCiclo(jcbxCiclo);
         LlenadoresYLimpiadores.llenarComboBoxFacultades(jcbxFacultad);
-        LlenadoresYLimpiadores.llenarComboBoxEAP(jcbxEscuela,(FacultadTO) jcbxFacultad.getSelectedItem());        
+        LlenadoresYLimpiadores.llenarComboBoxEAP(jcbxEscuela, (FacultadTO) jcbxFacultad.getSelectedItem());
+        LlenadoresYLimpiadores.llenarComboBoxCiclo(jcbxCiclo, (CarreraTO) jcbxEscuela.getSelectedItem());
+        llenarDatos();
     }
 
     /**
@@ -52,34 +56,57 @@ public class Curso_PlanDeEstudiosGUI extends javax.swing.JFrame {
 
         jLabel3.setText("Ciclo:");
 
+        jcbxCiclo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbxCicloActionPerformed(evt);
+            }
+        });
+
+        jcbxEscuela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbxEscuelaActionPerformed(evt);
+            }
+        });
+
         jtblCursosDePlan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "id", "Nombre"
+                "id", "Nombre", "Créditos"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        jtblCursosDePlan.setGridColor(new java.awt.Color(255, 255, 255));
+        jtblCursosDePlan.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jtblCursosDePlan.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jtblCursosDePlan);
         if (jtblCursosDePlan.getColumnModel().getColumnCount() > 0) {
             jtblCursosDePlan.getColumnModel().getColumn(0).setMinWidth(100);
             jtblCursosDePlan.getColumnModel().getColumn(0).setPreferredWidth(100);
             jtblCursosDePlan.getColumnModel().getColumn(0).setMaxWidth(100);
+            jtblCursosDePlan.getColumnModel().getColumn(2).setMinWidth(80);
+            jtblCursosDePlan.getColumnModel().getColumn(2).setPreferredWidth(80);
+            jtblCursosDePlan.getColumnModel().getColumn(2).setMaxWidth(80);
         }
 
         jbtnAgregarCurso.setText("Agregar Nuevo Curso");
         jbtnAgregarCurso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnAgregarCursoActionPerformed(evt);
+            }
+        });
+
+        jcbxFacultad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbxFacultadActionPerformed(evt);
             }
         });
 
@@ -159,8 +186,25 @@ public class Curso_PlanDeEstudiosGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnAgregarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgregarCursoActionPerformed
-        
+        actualizarVariableInfo();
+        CursosGenericosDisponiblesGUI gui = new CursosGenericosDisponiblesGUI(this, info_plan_curso);
+        setVisible(false);
+        gui.setVisible(true);
+        llenarDatos();
     }//GEN-LAST:event_jbtnAgregarCursoActionPerformed
+
+    private void jcbxFacultadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxFacultadActionPerformed
+        LlenadoresYLimpiadores.llenarComboBoxEAP(jcbxEscuela, (FacultadTO) jcbxFacultad.getSelectedItem());
+        LlenadoresYLimpiadores.llenarComboBoxCiclo(jcbxCiclo, (CarreraTO) jcbxEscuela.getSelectedItem());
+    }//GEN-LAST:event_jcbxFacultadActionPerformed
+
+    private void jcbxCicloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxCicloActionPerformed
+        llenarDatos();
+    }//GEN-LAST:event_jcbxCicloActionPerformed
+
+    private void jcbxEscuelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbxEscuelaActionPerformed
+        llenarDatos();
+    }//GEN-LAST:event_jcbxEscuelaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -177,5 +221,20 @@ public class Curso_PlanDeEstudiosGUI extends javax.swing.JFrame {
     private javax.swing.JTable jtblCursosDePlan;
     // End of variables declaration//GEN-END:variables
 
-    
+    public void llenarDatos() {
+        actualizarVariableInfo();
+        LlenadoresYLimpiadores.limpiartable(jtblCursosDePlan);
+        LlenadoresYLimpiadores.llenarTablaCursoPorPlan(jtblCursosDePlan, info_plan_curso);
+    }
+
+    private void actualizarVariableInfo() {
+        try {
+            info_plan_curso = new Curso_Plan_TO();
+            info_plan_curso.setId_carrera(((CarreraTO) jcbxEscuela.getSelectedItem()).getId());
+            info_plan_curso.setId_ciclo(((NombreCicloTO) jcbxCiclo.getSelectedItem()).getId());
+            info_plan_curso.setId_plan(((PlanDeEstudioTO) jcbxPlanDeEstudio.getSelectedItem()).getId());
+        } catch (Exception e) {
+        }
+    }
+
 }

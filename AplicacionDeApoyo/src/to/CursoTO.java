@@ -24,4 +24,9 @@ public class CursoTO {
         this.nombre_curso = nombre_curso;
     }
 
+    @Override
+    public String toString() {
+        return nombre_curso;
+    }
+    
 }
