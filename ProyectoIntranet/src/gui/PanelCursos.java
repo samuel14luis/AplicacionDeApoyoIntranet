@@ -14,8 +14,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -326,45 +324,66 @@ public class PanelCursos extends javax.swing.JPanel {
     private void cargarCursos() {
 
         addCurso(
-                "Taller de Desarrollo de Software I", "FARRO PACÍFICO Edwin Iván", 4d, Colores.getColorAt(0),
-                19.4, 19.2, 19.0,
-                18.4, 18.2, 20.0,
-                19.4, 19.2, 19.4,
-                19.4, 18.2, 18.4,
+                "Estadística Inferencial", "CRUZ CASTAÑEDA Carlos Manuel", 3d, Colores.getColorAt(0),
+                14.0, 14.0, 15.0,
+                15.0, 17.0, 17.0,
+                15.0, 16.0, 14.0,
+                null, null, null,
                 0
         );
+        
+        addCurso(
+                "Taller de Desarrollo de Software I", "FARRO PACÍFICO Edwin Iván", 4d, Colores.getColorAt(4),
+                8.0, 20.0, 20.0,
+                20.0, 20.0, 20.0,
+                13.0, 20.0, 20.0,
+                null, null, null,
+                0
+        );
+        
+        addCurso(
+                "Fundamentos de Sistemas de Información", "MEYHUAY FIDEL Juan Carlos", 3d, Colores.getColorAt(7),
+                null, null, null,
+                13d, 14d, 13d,
+                13d, 14d, 13d,
+                null, null, null,
+                0
+        );
+        
+        addCurso(
+                "Criptografía I", "HILARIO FALCÓN Manuel", 4d, Colores.getColorAt(5),
+                15d, 14d, 16d,
+                17d, 18d, 18d,
+                15d, 18d, 17d,
+                null, null, null,
+                0
+        );
+        
         addCurso(
                 "Taller de Procesamiento Distribuido", "GALLARDO ANDRÉS Jhonar Ángel", 4d, Colores.getColorAt(1),
-                15.4, 18.2, 15.4,
-                15.4, 18.2, 15.4,
-                15.4, 18.2, 15.4,
-                15.4, 18.2, 15.4,
+                null, null, null,
+                18d, 8d, 14d,
+                14d, 20d, 14d,
+                null, null, null,
                 0
         );
         addCurso(
                 "Taller de Innovación Tecnológica", "LEÓN JULCA Manuel Antonio", 3d, Colores.getColorAt(2),
-                15.4, 18.2, 15.4,
-                11.4, 18.2, 11.4,
-                15.4, 12.2, 15.4,
-                15.4, 18.2, 15.4,
+                14d, 14d, 16d,
+                11d, 17d, 16d,
+                13d, 16d, 15d,
+                null, null, null,
                 0
         );
         addCurso(
-                "Ética, Responsabilidad Social y Ambiental", "CRUZ CASTAÑEDA Carlos Manuel", 2d, Colores.getColorAt(3),
-                15.4, 18.2, 18.4,
-                15.4, 12.2, 15.4,
-                10.4, 18.2, 15.4,
-                15.4, 10.2, 17.4,
+                "Ética, Responsabilidad Social y Ambiental", "CRUZ CASTAÑEDA Carlos Manuel", 4d, Colores.getColorAt(3),
+                14d, 15d, 14d,
+                15d, 15d, 15d,
+                14d, 13d, 13d,
+                null, null, null,
                 0
         );
-        addCurso(
-                "Fundamentos de Sistemas de Información", "MEYHUAY FIDEL Juan Carlos", 3d, Colores.getColorAt(7),
-                15.4, 10.2, 10.4,
-                12.4, 12.2, 15.4,
-                10.4, 14.2, 10.4,
-                10.4, 18.2, 15.4,
-                0
-        );
+        
 
         /*
         addCurso(
